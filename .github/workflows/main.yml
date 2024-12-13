@@ -1,0 +1,40 @@
+name: Schedule BLS Dashboard
+
+on:
+  schedule:
+    # Run at 12:00 PM UTC on the 15th of every month
+    - cron: '0 12 15 * *'
+  workflow_dispatch: # Allow manual triggers
+
+jobs:
+  run-dashboard:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Step 1: Checkout repository
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # Step 2: Set up Python environment
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'
+
+      # Step 3: Install dependencies
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      # Step 4: Run the Streamlit script
+      - name: Run BLS Dashboard script
+        run: |
+          streamlit run bls_dashboard.py --server.headless true
+
+      # Optional: Save output or deploy results
+      # Uncomment and configure if needed
+      # - name: Save output
+      #   run: |
+      #     echo "Saving output..."
+      #     # Add your data-saving logic here
