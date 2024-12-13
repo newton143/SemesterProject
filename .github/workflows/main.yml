@@ -30,7 +30,7 @@ jobs:
       # Step 4: Run the Streamlit script
       - name: Run BLS Dashboard script
         run: |
-          streamlit run bls_dashboard.py --server.headless true
+          streamlit run app.py --server.headless true
 
       # Optional: Save output or deploy results
       # Uncomment and configure if needed
