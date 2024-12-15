@@ -27,14 +27,15 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-      # Step 4: Run the Streamlit script
-      - name: Run BLS Dashboard script
+      # Step 4: Run the Streamlit script with timeout
+      - name: Run BLS Dashboard script with timeout
         run: |
-          streamlit run app.py --server.headless true
+          timeout 300 streamlit run app.py --server.headless true
+        env:
+          STREAMLIT_SERVER_PORT: 8501
 
-      # Optional: Save output or deploy results
-      # Uncomment and configure if needed
-      # - name: Save output
-      #   run: |
-      #     echo "Saving output..."
-      #     # Add your data-saving logic here
+      # Step 5: Log cleanup message
+      - name: Cleanup
+        if: always()
+        run: |
+          echo "Streamlit process has completed or timed out after 5 minutes."
